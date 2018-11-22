@@ -34,11 +34,11 @@
 		
 		<script src="reveal/lib/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript">
-			var mdTop = '<section data-markdown><textarea data-template>';
-			var mdBottom = '</textarea></section>';
+			var mdTop = '<section data-markdown><script type="text/template">';
+			var mdBottom = '<\/script></section>';
 			var mdMiddle = mdBottom + mdTop;
-			$.get( "md_2_0.md", function( data ) {
-				data = mdTop + data.replace("---", mdMiddle) + mdBottom;
+			$.get( "md_2_1.md", function( data ) {
+				data = mdTop + data.replace(/\n\n---\n\n/g, mdMiddle) + mdBottom;
 				$( "#slides" ).html( data );
 			});
 		</script>

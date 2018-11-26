@@ -39,6 +39,13 @@
 			var mdBottom = '<\/script></section>';
 			var mdMiddle = mdBottom + mdTop;
 			$.get( "md_2_1.md", function( data ) {
+				var title = data.match(/Note:title:"(.*)"/);
+				if(title == null) {
+					title = "Title";
+				} else {
+					title = title[1];
+				}
+				document.title = title;		
 				data = mdTop + data.replace(/\n\n---\n\n/g, mdMiddle) + mdBottom;
 				$( "#slides" ).html( data );
 			});

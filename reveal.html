@@ -10,6 +10,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" href="reveal/css/reveal.css">
 		<link rel="stylesheet" href="reveal/css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="reveal/css/self_config.css">
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="reveal/lib/css/zenburn.css">
 		<!-- Printing and PDF exports -->
@@ -34,13 +35,38 @@
 		
 		<script src="reveal/lib/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript">
-			var mdTop = '<section data-markdown><script type="text/template">';
-			var mdBottom = '<\/script></section>';
-			var mdMiddle = mdBottom + mdTop;
-			$.get( "md_2_1.md", function( data ) {
-				data = mdTop + data.replace(/\n\n---\n\n/g, mdMiddle) + mdBottom;
-				$( "#slides" ).html( data );
-			});
+			function GetURLParameter(sParam) {
+				var sPageURL = window.location.search.substring(1),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName,
+				i;
+
+				for (i = 0; i < sURLVariables.length; i++) {
+					sParameterName = sURLVariables[i].split('=');
+
+					if (sParameterName[0] === sParam) {
+						return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+					}
+				}
+			}
+
+			var filename = GetURLParameter('filename');
+			if (filename != undefined) {
+				var mdTop = '<section data-markdown><script type="text/template">';
+				var mdBottom = '<\/script></section>';
+				var mdMiddle = mdBottom + mdTop;
+				$.get( filename + ".md", function( data ) {
+					var title = data.match(/Note:title:"(.*)"/);
+					if(title == null) {
+						title = "Title";
+					} else {
+						title = title[1];
+					}
+					document.title = title;		
+					data = mdTop + data.replace(/\n\n---\n\n/g, mdMiddle) + mdBottom;
+					$( "#slides" ).html( data );
+				});
+			}
 		</script>
 
 		<script src="reveal/lib/js/head.min.js"></script>

@@ -40,7 +40,7 @@
 			var mdTop = '<section data-markdown><script type="text/template">';
 			var mdBottom = '<\/script></section>';
 			var mdMiddle = mdBottom + mdTop;
-			$.get( "md_2_2.md", function( data ) {
+			$.get( "md_2_2/index.md", function( data ) {
 				var title = data.match(/Note:title:"(.*)"/);
 				if(title == null) {
 					title = "Title";
